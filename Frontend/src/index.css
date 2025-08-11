@@ -1,0 +1,22 @@
+@import 'tailwindcss';
+
+.no-spinners::-webkit-outer-spin-button,
+.no-spinners::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.no-spinners[type=number] {
+  -moz-appearance: textfield;
+}
+
+* {
+  font-family: 'Inter', sans-serif;
+}
+
+@theme {
+  --color-primary: #2ECC71;
+  --color-primary-light: #27b361;
+  --color-secundary: #ecf0f1;
+  --color-color-text: #34495e;
+}
