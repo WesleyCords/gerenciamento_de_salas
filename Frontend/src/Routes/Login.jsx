@@ -1,20 +1,26 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import useAxios from '../hook/use-axios'
+import api from '../helper/axios-instance'
 import Button from '../components/Button'
 import Input from '../components/Input'
 
 const Login = () => {
 const navigate = useNavigate()
+const [credenciais, setCredenciais] = useState({email: '', password: ''})
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('')
+const [data, loading, error] = useAxios({
+  axiosIntance: api,
+  method: 'GET',
+  url: 'pokemon'
+})
+
+console.log(data, loading, error)
 
   const authLogin = (e) => {
     e.preventDefault()
-    console.log(email)
-    console.log(password)
 
-    if(email === "teste@gmail.com" && password === "123"){
+    if(credenciais.email === "teste@gmail.com" && credenciais.password === "123"){
       console.log("Login efetuado com sucesso!")
       navigate('/home', {replace: true})
     }
@@ -28,14 +34,14 @@ const navigate = useNavigate()
             <label className="text-4 font-[500]">E-mail</label>
             <div className="group flex items-center rounded-[8px] border-2 border-b-black bg-secundary focus-within:border-primary">
               <i className="fa-regular fa-envelope p-3"></i>
-              <Input type="email" placeholder="digite seu E-mail" evento={(e) => setEmail(e.target.value)}/>
+              <Input type="email" placeholder="digite seu E-mail" evento={(e) => setCredenciais({...credenciais, password: e.target.value}) }/>
             </div>
           </div>
           <div className="flex flex-col">
             <label className="text-4 font-[500]">Senha</label>
             <div className="group flex items-center rounded-[8px] border-2 border-b-black bg-secundary focus-within:border-primary">
               <i className="fa-solid fa-lock p-3"></i>
-              <Input type="password" placeholder="Digite sua senha" evento={(e) => setPassword(e.target.value)} />
+              <Input type="password" placeholder="Digite sua senha" evento={(e) => setCredenciais({...credenciais, email: e.target.value}) } />
             </div>
             <a
               className="p-1 text-end font-[500] text-primary hover:underline"
