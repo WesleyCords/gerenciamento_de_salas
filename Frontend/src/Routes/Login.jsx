@@ -6,23 +6,31 @@ import Button from '../components/Button'
 import Input from '../components/Input'
 
 const Login = () => {
-const navigate = useNavigate()
-const [credenciais, setCredenciais] = useState({email: '', password: ''})
+  const navigate = useNavigate()
+  const [credenciais, setCredenciais] = useState({email: '', senha: ''})
 
-const [data, loading, error] = useAxios({
-  axiosIntance: api,
-  method: 'GET',
-  url: 'pokemon'
-})
+  const { fetchData, loading, response, error } = useAxios({
+    axiosIntance: api,
+    method: 'POST',
+    url: 'auth/login',
+  })
 
-console.log(data, loading, error)
-
-  const authLogin = (e) => {
+  const authLogin = async (e) => {
     e.preventDefault()
 
-    if(credenciais.email === "teste@gmail.com" && credenciais.password === "123"){
-      console.log("Login efetuado com sucesso!")
-      navigate('/home', {replace: true})
+    try {
+      await fetchData(credenciais)
+      const { token, data } = response
+
+      if(token) {
+        console.log("Login bem sucedido!")
+        localStorage.setItem('token', token)
+        localStorage.setItem('user', JSON.stringify(data.user))
+        navigate('/home', {replace: true})
+      }
+
+    } catch(error) {
+      console.log("Erro ao fazer login: ", error)
     }
   }
 
@@ -34,14 +42,14 @@ console.log(data, loading, error)
             <label className="text-4 font-[500]">E-mail</label>
             <div className="group flex items-center rounded-[8px] border-2 border-b-black bg-secundary focus-within:border-primary">
               <i className="fa-regular fa-envelope p-3"></i>
-              <Input type="email" placeholder="digite seu E-mail" evento={(e) => setCredenciais({...credenciais, password: e.target.value}) }/>
+              <Input type="email" placeholder="digite seu E-mail" evento={(e) => setCredenciais({...credenciais, email: e.target.value}) }/>
             </div>
           </div>
           <div className="flex flex-col">
             <label className="text-4 font-[500]">Senha</label>
             <div className="group flex items-center rounded-[8px] border-2 border-b-black bg-secundary focus-within:border-primary">
               <i className="fa-solid fa-lock p-3"></i>
-              <Input type="password" placeholder="Digite sua senha" evento={(e) => setCredenciais({...credenciais, email: e.target.value}) } />
+              <Input type="password" placeholder="Digite sua senha" evento={(e) => setCredenciais({...credenciais, senha: e.target.value}) } />
             </div>
             <a
               className="p-1 text-end font-[500] text-primary hover:underline"
@@ -49,12 +57,15 @@ console.log(data, loading, error)
             >
               Esqueceu sua senha?
             </a>
+            {error.status === 400 && (
+              <div className='text-red-500 text-sm font-semibold text-center'>Credenciais inválidas</div>
+            )}
           </div>
-          <Button content="Entrar" />
+          <Button content={loading ? "Carregando..." : "Entrar"} />
         </form>
         <div className="flex justify-center gap-2">
           <p>Não tem uma conta?</p>
-          <a href="#" className="font-[500] text-primary hover:underline" onClick={() => navigate("/register")}>
+          <a href="#" className="font-[500] text-primary hover:underline" onClick={(e) => { e.preventDefault(); navigate("/register")}}>
             Cadastre-se
           </a>
         </div>

@@ -3,11 +3,11 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import Usuario from "../models/usuariosModel.js";
 
-dotenv.config()
+dotenv.config();
 
 const createToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET , {
-    expiresIn: '1h',
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: "1h",
   });
 };
 
@@ -28,7 +28,7 @@ const register = async (nome, email, senha) => {
   });
   const token = createToken(newUser.id);
 
-  return { newUser, token};
+  return { newUser, token };
 };
 
 const login = async (email, senha) => {
@@ -36,13 +36,13 @@ const login = async (email, senha) => {
   const match = await bcrypt.compare(senha, user.senhaHash);
 
   if (!user || !match) {
-    const error = new Error("Informações inválidas."); 
-    error.statusCode = 401; 
-    error.status = "falha";
+    const error = new Error("Informações inválidas.");
+    error.statusCode = 400;
+    error.mensage = "falha";
     throw error;
   }
 
-  const token = createToken(user.id)
+  const token = createToken(user.id);
 
   return { user, token };
 };

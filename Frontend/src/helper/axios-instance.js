@@ -1,5 +1,4 @@
 import Axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 const api = Axios.create({
     baseURL: "http://localhost:8081/api"
@@ -21,10 +20,9 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response.status === 401) {
-      const navigate = useNavigate()
+    if (error.status === 401) {
       localStorage.removeItem('token');
-      navigate('/login')
+      window.location.href = '/register'
     }
     return Promise.reject(error);
   }

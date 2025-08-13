@@ -1,33 +1,36 @@
-import { useCallback ,useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 
 
 // USABILIDADE - criei um Hook para usar e não repetir o código, apenas o "useAxios()"
 const useAxios = (configReq) => {
-    const {axiosIntance, url, method, configs = {} } = configReq;
-    const [data, setData] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const {axiosIntance, url, method } = configReq;
+    const [response, setResponse] = useState(null);
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
-    const fetchData = useCallback(async () => {
-        setLoading(true);
-        setError('');
+    const fetchData = useCallback(async (reqData = {}, reqConfigs = {}) => {
         try {
-            const res = await axiosIntance[method.toLowerCase()](url, {
-                ...configs
-            });
-            setData(res.data);
+            let res 
+            setLoading(true)
+            const methodName = method.toLowerCase()
+            
+            if(['get', 'head', 'delete'].includes(methodName)) {
+                res = await axiosIntance[methodName]( url, { 
+                params: reqData,
+                ...reqConfigs 
+                });
+            } else {
+                res = await axiosIntance[methodName](url, reqData, reqConfigs);
+            }
+            setResponse(res.data);
         } catch (err) {
             setError(err);
         } finally {
             setLoading(false);
         }
-    }, [axiosIntance, method, url, configs]);
+    }, [axiosIntance, method, url]);
 
-    useEffect(() => {
-        fetchData()
-    }, [fetchData])
-
-    return [data, loading, error]
+    return { response, loading, error, fetchData } 
 }
 
 
