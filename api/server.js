@@ -8,7 +8,8 @@ import morgan from "morgan";
 import cors from "cors";
 import { specs, swaggerUi } from "./swagger.js";
 import { connectDB } from "./config/databases.js";
-import { sequelize, Usuario, Sala, Horario, Reserva } from "./models/index.js";
+import handleError from "./middlewares/handleError.js";
+import { sequelize, Reserva, Horario, Sala, Usuario } from "./models/index.js";
 
 // Importações de ROTAS
 import userRouter from "./routers/usersRouter.js";
@@ -30,6 +31,9 @@ app.use("/api/auth", authRouter);
 app.use("/api/usuarios", userRouter);
 app.use("/api/salas", salaRouter);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
+
+// Middleware de erro global
+app.use(handleError);
 
 // Rodando server
 const PORT = process.env.PORT || 8081;

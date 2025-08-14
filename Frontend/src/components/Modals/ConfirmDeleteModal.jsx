@@ -1,6 +1,16 @@
-const ConfirmDeleteModal = ({close}) => {
+import api from "../../helper/axios-instance"
+import useAxios from "../../hook/use-axios"
+
+const ConfirmDeleteModal = ({close, userId, reservaId }) => {
+
+    const {fetchData, loading} = useAxios({
+        url: `usuarios/${userId}/reservas/${reservaId}`,
+        method: "DELETE",
+        axiosIntance: api
+    })
 
     const handleDelete = () => {
+        fetchData()
         alert("Reserva deletada com sucesso!")
         close(false)
     }
@@ -12,8 +22,8 @@ const ConfirmDeleteModal = ({close}) => {
                 <h2 className="font-bold text-2xl">Confirme Delete</h2>
                 <p className="text-[0.8rem]">Tem certeza de que deseja excluir esta reserva? Esta ação é permanente e não pode ser desfeita.</p>
                 <div className="flex flex-col gap-3">
-                    <button className="bg-red-600 p-3 rounded text-white cursor-pointer hover:bg-red-800" onClick={handleDelete}>
-                        Confirmar Delete
+                    <button className="bg-red-600 p-3 rounded text-white cursor-pointer hover:bg-red-800" onClick={() => handleDelete()}>
+                        {loading ? "Deletando..." : "Confirme Delete"}
                     </button>
                     <button className="p-3 rounded cursor-pointer hover:bg-gray-400" onClick={() => close(false)}>
                         Cancelar

@@ -23,6 +23,7 @@ const useAxios = (configReq) => {
                 res = await axiosIntance[methodName](url, reqData, reqConfigs);
             }
             setResponse(res.data);
+            return res.data
         } catch (err) {
             setError(err);
         } finally {

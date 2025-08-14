@@ -1,27 +1,28 @@
-import { useState } from "react"
-import EditModal from "./Modals/EditModal"
-import ConfirmDeleteModal from "./Modals/ConfirmDeleteModal"
+import { useState } from "react";
+import ConfirmDeleteModal from "./Modals/ConfirmDeleteModal";
+import EditModal from "./Modals/EditModal";
 
-const CardsReser = () => {
+const Reser = ({dados, userID}) => {
     const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false)
     const [isOpenEditModal, setIsOpenEditModal] = useState(false)
 
+    const {data, sala, horario, id, horarioId, salaId, usuarioId} = dados
+
     const openModalEdit = () => {
         setIsOpenEditModal(true)
-        console.log("OXEEEE")
     }
 
     return (
         <div className="bg-white shadow-2xl p-4 rounded">
-            <h2 className="font-bold text-[1.5rem]">Sala 2 - Estudos</h2>
+            <h2 className="font-bold text-[1.5rem]">{sala.nome}</h2>
             <div className="flex gap-1.5 items-center mb-1">
                 <span className="border-r-1 pr-1.5">
-                    2025-08-09
+                    {data}
                 </span>
                 <p className="flex gap-2">
-                    <span>13:00 PM</span>
+                    <span>{horario.inicio}</span>
                     -
-                    <span>14:00 PM</span>
+                    <span>{horario.fim}</span>
                 </p>
             </div>
             <div className="flex gap-4 border-t-1 border-gray-300 pt-3">
@@ -34,10 +35,10 @@ const CardsReser = () => {
                     <button className="cursor-pointer">Deletar</button>
                 </div>
             </div>
-            {isOpenDeleteModal && <ConfirmDeleteModal close={setIsOpenDeleteModal}/>}
-            {isOpenEditModal && <EditModal close={setIsOpenEditModal}/>}
+            {isOpenDeleteModal && <ConfirmDeleteModal userId={userID} reservaId={id} close={setIsOpenDeleteModal}/>}
+            {isOpenEditModal && <EditModal horarioId={horarioId} reservaId={id} userId={usuarioId} close={setIsOpenEditModal} salaId={salaId} data={data}/>}
         </div>
-    )
-}
+    );
+};
 
-export default CardsReser
+export default Reser;

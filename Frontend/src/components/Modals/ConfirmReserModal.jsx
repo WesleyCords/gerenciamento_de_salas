@@ -1,10 +1,32 @@
-const ConfirmReserModal = ({close, dados}) => {
+import api from "../../helper/axios-instance"
+import useAxios from "../../hook/use-axios"
 
-    const {horarios, sala, data} = dados
+const ConfirmReserModal = ({close, dados, data, horario}) => {
+    const {id} = JSON.parse(localStorage.getItem("user"))
+    const salaID = dados.id
+    const horarioID = horario.id
+
+    const {fetchData, error} = useAxios({
+        method: "POST",
+        url: `usuarios/${id}/reservas`,
+        axiosIntance: api
+    })
+
+    const payload = {
+        data,
+        horario_id: horarioID,
+        sala_id: salaID
+    }
     
     const testeReservar = () => {
-        alert("TESTE: Reserva feita com sucesso!")
-        close(false)
+        try {
+            console.log(payload)
+            fetchData(payload)
+            close(false)
+            console.log("opa")
+        }catch(err) {
+            console.log("Deu erro: ",err)
+        }
     }
 
     return (
@@ -14,7 +36,7 @@ const ConfirmReserModal = ({close, dados}) => {
                 <div className="flex flex-col gap-2 text-white">
                     <div className="flex justify-between items-center bg-gray-400 rounded p-2 font-semibold">
                         <h3>Sala:</h3>
-                        <span>{sala}</span>
+                        <span>{dados.nome}</span>
                     </div>
                     <div className="flex justify-between items-center bg-gray-400 rounded p-2 font-semibold">
                         <h3>Data:</h3>
@@ -22,9 +44,10 @@ const ConfirmReserModal = ({close, dados}) => {
                     </div>
                     <div className="flex justify-between items-center bg-gray-400 rounded p-2 font-semibold">
                         <h3>Horário:</h3>
-                        <span>{horarios.inicio} - {horarios.fim}</span>
+                        <span>{horario.inicio} - {horario.fim}</span>
                     </div>
                 </div>
+                {error?.response?.data?.message}
                 <div className="flex justify-end gap-2 font-semibold">
                     <button className="hover:bg-gray-300 p-3 rounded cursor-pointer" onClick={() => close(false)}>Cancelar</button>
                     <button className="bg-primary p-3 rounded cursor-pointer hover:bg-primary-light" onClick={testeReservar}>Reservar</button>

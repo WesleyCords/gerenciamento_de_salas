@@ -1,24 +1,64 @@
 import Sala from "../models/salasModel.js";
-import Horarios from "../models/horarioModel.js";
+import Horario from "../models/horarioModel.js";
+import Reserva from "../models/reservasModel.js";
 import { Op } from "sequelize";
 import { sequelize } from "../config/databases.js";
 
-const getRoomByCapacity = async (capacidade) => {
+const getRoomByCapacity = async (capacidade, data) => {
   const salas = await Sala.findAll({
     where: {
       capacidade: {
         [Op.gte]: capacidade,
       },
     },
+    include: [
+      {
+        model: Horario,
+        include: [
+          {
+            model: Reserva,
+            required: false,
+            where: {
+              data: data,
+            },
+          },
+        ],
+      },
+    ],
+    distinct: true,
+    col: "id",
   });
 
   if (salas.length === 0) {
-    const error = new Error("Não existe salas no momento com essa capacidade.");
+    const error = new Error(
+      "Não existe salas no momento para esses requisitos."
+    );
     error.statusCode = 404;
     error.status = "falha";
     throw error;
   }
-  return salas; 
+
+  const resultadoFormatado = salas
+    .map((sala) => {
+      const horariosLivres = sala.horarios
+        .filter((horario) => horario.reservas.length === 0)
+        .map((horario) => ({
+          id: horario.id,
+          inicio: horario.inicio,
+          fim: horario.fim,
+        }));
+
+      return {
+        id: sala.id,
+        nome: sala.nome,
+        descricao: sala.descricao,
+        capacidade: sala.capacidade,
+        horariosLivres: horariosLivres,
+      };
+    })
+    .filter((sala) => sala.horariosLivres.length > 0);
+
+  return resultadoFormatado;
 };
 
 const getRoomByID = async (salaID) => {
@@ -49,7 +89,7 @@ const getHorariosRoomByID = async (salaID) => {
     error.status = "falha";
     throw error;
   }
-  const horarios = await Horarios.findAll({
+  const horarios = await Horario.findAll({
     where: {
       salaId: salaID,
     },
@@ -77,19 +117,22 @@ const getRoomAvailable = async (salaID, data) => {
     FROM
       horarios AS h
     LEFT JOIN
-      reservas AS r ON h.id = r.horarioId AND h.salaId = r.salaId AND r.data = :dataParam
+      reservas AS r ON h.id = r.horario_id AND h.sala_id = r.sala_id AND r.data = :dataParam
     WHERE
-      h.salaId = :salaIdParam
+      h.sala_id = :salaIdParam
       AND r.id IS NULL
     ORDER BY
       h.inicio;
-      `, {
-            replacements: {
-              dataParam: data,
-              salaIdParam: salaID,
-            },
-            type: sequelize.QueryTypes.SELECT,
-          });
+      `,
+    {
+      replacements: {
+        dataParam: data,
+        salaIdParam: salaID,
+      },
+      type: sequelize.QueryTypes.SELECT,
+    }
+  );
+  console.log(horariosSala);
   return horariosSala;
 };
 

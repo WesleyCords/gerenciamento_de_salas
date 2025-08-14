@@ -1,7 +1,7 @@
 import Axios from "axios";
 
 const api = Axios.create({
-    baseURL: "http://localhost:8081/api"
+    baseURL: import.meta.env.VITE_BASE_URL
 })  
 
 // Vai "Interrogar o request" e pegar o token do localstorage e mandar no header de todas as outras requests (exceto a de login e registro)

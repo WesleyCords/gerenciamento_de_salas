@@ -2,13 +2,13 @@ import AvailRoom from './MainAvailRoom'
 import Reservation from './MainReservation'
 import Wellcome from './MainWellcome'
 
-const MainContent = ({ screen }) => {
+const MainContent = ({ screen, user }) => {
   const renderScreen = () => {
     switch (screen) {
       case 'inicial':
-        return <Wellcome />
+        return <Wellcome user={user} />
       case 'disponiveis':
-        return <AvailRoom />
+        return <AvailRoom user={user}/>
       case 'reservas':
         return <Reservation />
     }

@@ -17,13 +17,12 @@ const Login = () => {
 
   const authLogin = async (e) => {
     e.preventDefault()
-
+    
     try {
       await fetchData(credenciais)
       const { token, data } = response
 
       if(token) {
-        console.log("Login bem sucedido!")
         localStorage.setItem('token', token)
         localStorage.setItem('user', JSON.stringify(data.user))
         navigate('/home', {replace: true})
@@ -57,8 +56,8 @@ const Login = () => {
             >
               Esqueceu sua senha?
             </a>
-            {error.status === 400 && (
-              <div className='text-red-500 text-sm font-semibold text-center'>Credenciais inválidas</div>
+            {error && (
+              <div className='text-red-500 text-[1rem] font-semibold text-center'>{error.response?.data?.message}</div>
             )}
           </div>
           <Button content={loading ? "Carregando..." : "Entrar"} />
