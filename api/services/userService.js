@@ -114,8 +114,6 @@ const attReserva = async (userID, reservaID, horario_id) => {
       usuarioId: userID,
     },
   });
-  console.log(existReserva);
-  console.log(userID, " - ", horario_id, " - ", reservaID);
   if (!existReserva) {
     const error = new Error("Usuário não tem reserva para ser atualizada.");
     error.statusCode = 404;

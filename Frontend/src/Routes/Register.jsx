@@ -8,6 +8,7 @@ import api from '../helper/axios-instance'
 const Register = () => {
   const [credenciais, setCredenciais] = useState({email: "", senha: "", nome: ""})
   const [confirmPassword, setConfirmPassword] = useState('')
+  const [isConflit, setIsConfit] = useState(false)
   const navigate = useNavigate()
 
   const {error, fetchData, response } = useAxios({
@@ -16,21 +17,22 @@ const Register = () => {
     url: "usuarios",
   })
 
+  // Por algum motivo tem que dar dois cliques
   const createAccount = (e) => {
     e.preventDefault()
 
     try {
       fetchData(credenciais)
-
       if(confirmPassword !== credenciais.senha) {
+        setIsConfit(true)
         alert("Senhas precisa ser iguais!")
         return
       }
-      if(error.response?.data?.statusCode === 409) {
+      console.log(error)
+      if(error.response?.status === 409) {
         alert("Email já cadastrado, tente com outro email!")
       }
       if(response) {
-        console.log(response)
         navigate('/login')
       }
 
@@ -46,7 +48,7 @@ const Register = () => {
           <div className="flex flex-col">
             <label className="text-4 font-[500]">Nome Completo</label>
             <div className="group flex items-center rounded-[8px] border-2 border-b-black bg-secundary focus-within:border-primary">
-              <i class="fa-solid fa-user p-3"></i>
+              <i className="fa-solid fa-user p-3"></i>
               <Input type="text" placeholder="digite seu nome" evento={(e) =>setCredenciais({...credenciais ,nome:e.target.value}) } value={credenciais.nome} />
             </div>
           </div>
@@ -59,7 +61,7 @@ const Register = () => {
           </div>
           <div className="flex flex-col">
             <label className="text-4 font-[500]">Senha</label>
-            <div className="group flex items-center rounded-[8px] border-2 border-b-black bg-secundary focus-within:border-primary">
+            <div className={`group flex items-center rounded-[8px] border-2 border-b-black bg-secundary focus-within:border-primary ${isConflit ? 'bg-red-400' : ''}`}>
               <i className="fa-solid fa-lock p-3"></i>
               <Input type="password" placeholder="Digite sua senha" evento={(e) =>setCredenciais({...credenciais , senha:e.target.value}) } value={credenciais.senha}/>
             </div>
@@ -71,7 +73,7 @@ const Register = () => {
               <Input type="password" placeholder="Confirme sua senha" evento={(e) => setConfirmPassword(e.target.value)} value={confirmPassword}/>
             </div>
           </div>
-          <Button content="Cadastrar"/>
+          <Button content="Cadastrar" evento={createAccount}/>
         </form>
         <div className="flex justify-center gap-2">
           <p>Já tem uma conta?</p>

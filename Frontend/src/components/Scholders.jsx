@@ -8,6 +8,15 @@ const Scholders = ({salaId, data, evento, selectId}) => {
         axiosIntance: api
     })
 
+    const formatTime = timeString => {
+        const [hour, minute, second] = timeString.split(':');
+        console.log(second)
+        let h = parseInt(hour, 10);
+        const ampm = h >= 12 ? 'PM' : 'AM';
+        const formattedHour = h.toString().padStart(2, '0');
+        return `${formattedHour}:${minute} ${ampm}`;
+    }
+
     const horarios = response?.data?.salasDisponivel
 
     if(!horarios) {
@@ -32,9 +41,9 @@ const Scholders = ({salaId, data, evento, selectId}) => {
                     evento(horario.id_horario);
                 }}>
                     <p>
-                        <span>{horario.horario_inicio}</span>
+                        <span>{formatTime(horario.horario_inicio)}</span>
                         -
-                        <span>{horario.horario_fim}</span>
+                        <span>{formatTime(horario.horario_fim)}</span>
                     </p>
                 </div>
             ))

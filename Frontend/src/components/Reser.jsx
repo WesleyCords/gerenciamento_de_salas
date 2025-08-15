@@ -12,6 +12,15 @@ const Reser = ({dados, userID}) => {
         setIsOpenEditModal(true)
     }
 
+    const formatTime = timeString => {
+        const [hour, minute, second] = timeString.split(':');
+        console.log(second)
+        let h = parseInt(hour, 10);
+        const ampm = h >= 12 ? 'PM' : 'AM';
+        const formattedHour = h.toString().padStart(2, '0');
+        return `${formattedHour}:${minute} ${ampm}`;
+    }
+
     return (
         <div className="bg-white shadow-2xl p-4 rounded">
             <h2 className="font-bold text-[1.5rem]">{sala.nome}</h2>
@@ -20,9 +29,9 @@ const Reser = ({dados, userID}) => {
                     {data}
                 </span>
                 <p className="flex gap-2">
-                    <span>{horario.inicio}</span>
+                    <span>{formatTime(horario.inicio)}</span>
                     -
-                    <span>{horario.fim}</span>
+                    <span>{formatTime(horario.fim)}</span>
                 </p>
             </div>
             <div className="flex gap-4 border-t-1 border-gray-300 pt-3">

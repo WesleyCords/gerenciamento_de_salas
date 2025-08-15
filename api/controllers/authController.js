@@ -1,4 +1,4 @@
-import authService from "../services/authService.js"
+import authService from "../services/authService.js";
 
 const register = async (req, res, next) => {
   try {
@@ -24,7 +24,7 @@ const login = async (req, res, next) => {
       status: "sucesso",
       token,
       data: {
-        user
+        user,
       },
     });
   } catch (error) {
@@ -34,5 +34,5 @@ const login = async (req, res, next) => {
 
 export default {
   register,
-  login
-}
+  login,
+};

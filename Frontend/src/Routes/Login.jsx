@@ -9,27 +9,28 @@ const Login = () => {
   const navigate = useNavigate()
   const [credenciais, setCredenciais] = useState({email: '', senha: ''})
 
-  const { fetchData, loading, response, error } = useAxios({
+  const { fetchData, loading, error, response } = useAxios({
     axiosIntance: api,
     method: 'POST',
     url: 'auth/login',
   })
+  console.log(error)
 
   const authLogin = async (e) => {
     e.preventDefault()
     
     try {
       await fetchData(credenciais)
+      console.log(response)
       const { token, data } = response
-
       if(token) {
         localStorage.setItem('token', token)
         localStorage.setItem('user', JSON.stringify(data.user))
         navigate('/home', {replace: true})
       }
 
-    } catch(error) {
-      console.log("Erro ao fazer login: ", error)
+    } catch(err) {
+      console.log("Erro ao fazer login: ", err)
     }
   }
 
@@ -60,7 +61,7 @@ const Login = () => {
               <div className='text-red-500 text-[1rem] font-semibold text-center'>{error.response?.data?.message}</div>
             )}
           </div>
-          <Button content={loading ? "Carregando..." : "Entrar"} />
+          <Button evento={() => authLogin} content={loading ? "Carregando..." : "Entrar"} />
         </form>
         <div className="flex justify-center gap-2">
           <p>Não tem uma conta?</p>

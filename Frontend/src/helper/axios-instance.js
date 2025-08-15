@@ -22,7 +22,7 @@ api.interceptors.response.use(
   (error) => {
     if (error.status === 401) {
       localStorage.removeItem('token');
-      window.location.href = '/register'
+      window.location.href = '/login'
     }
     return Promise.reject(error);
   }

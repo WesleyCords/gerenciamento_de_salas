@@ -28,7 +28,6 @@ const getRoomByCapacity = async (capacidade, data) => {
     distinct: true,
     col: "id",
   });
-
   if (salas.length === 0) {
     const error = new Error(
       "Não existe salas no momento para esses requisitos."
@@ -57,7 +56,6 @@ const getRoomByCapacity = async (capacidade, data) => {
       };
     })
     .filter((sala) => sala.horariosLivres.length > 0);
-
   return resultadoFormatado;
 };
 
@@ -132,7 +130,6 @@ const getRoomAvailable = async (salaID, data) => {
       type: sequelize.QueryTypes.SELECT,
     }
   );
-  console.log(horariosSala);
   return horariosSala;
 };
 

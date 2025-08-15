@@ -12,6 +12,15 @@ const ConfirmReserModal = ({close, dados, data, horario}) => {
         axiosIntance: api
     })
 
+    const formatTime = timeString => {
+        const [hour, minute, second] = timeString.split(':');
+        console.log(second)
+        let h = parseInt(hour, 10);
+        const ampm = h >= 12 ? 'PM' : 'AM';
+        const formattedHour = h.toString().padStart(2, '0');
+        return `${formattedHour}:${minute} ${ampm}`;
+    }
+
     const payload = {
         data,
         horario_id: horarioID,
@@ -20,10 +29,8 @@ const ConfirmReserModal = ({close, dados, data, horario}) => {
     
     const testeReservar = () => {
         try {
-            console.log(payload)
             fetchData(payload)
             close(false)
-            console.log("opa")
         }catch(err) {
             console.log("Deu erro: ",err)
         }
@@ -44,7 +51,7 @@ const ConfirmReserModal = ({close, dados, data, horario}) => {
                     </div>
                     <div className="flex justify-between items-center bg-gray-400 rounded p-2 font-semibold">
                         <h3>Horário:</h3>
-                        <span>{horario.inicio} - {horario.fim}</span>
+                        <span>{formatTime(horario.inicio)} - {formatTime(horario.inicio)}</span>
                     </div>
                 </div>
                 {error?.response?.data?.message}

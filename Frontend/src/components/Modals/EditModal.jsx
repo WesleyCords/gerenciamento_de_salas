@@ -6,15 +6,11 @@ import { useState } from "react"
 const EditModal = ({close, userId, data, salaId, reservaId}) => {
     const [idHorario, setIdHorario] = useState('')
 
-    console.log(userId, " - ", )
-
     const {fetchData} = useAxios({
         method: "PUT",
         url: `usuarios/${userId}/reservas/${reservaId}`,
         axiosIntance: api
     })
-
-    console.log(idHorario)
 
     const changeReservation = () => {
         alert("reserva atualizada!")

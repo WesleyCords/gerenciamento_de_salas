@@ -28,6 +28,8 @@ const AvailRoom = () => {
     } catch(err) { console.log("erro aqui", err)}
   }
 
+  console.log(error)
+
   const renderContent = () => {
     if (loading) {
       return <p>Carregando salas disponíveis...</p>

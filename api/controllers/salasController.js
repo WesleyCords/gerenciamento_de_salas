@@ -18,9 +18,6 @@ const getRoomByCapacity = async (req, res, next) => {
       capacidade,
       data
     );
-
-    console.log(salasEspecifica);
-
     res.status(200).json({
       status: "sucesso",
       data: {
