@@ -14,7 +14,6 @@ const Login = () => {
     method: 'POST',
     url: 'auth/login',
   })
-  console.log(error)
 
   const authLogin = async (e) => {
     e.preventDefault()
