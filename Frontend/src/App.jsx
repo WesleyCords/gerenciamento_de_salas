@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
-import Login from './routes/Login'
-import Register from './routes/Register'
-import Home from './routes/Home'
+import Login from './Routes/Login'
+import Register from './Routes/Register'
+import Home from './Routes/Home'
 import LandingPage from './Routes/LandingPage'
 
 function App() {

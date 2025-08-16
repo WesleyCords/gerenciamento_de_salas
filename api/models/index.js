@@ -17,9 +17,6 @@ Horario.hasMany(Reserva, { foreignKey: "horarioId" });
 Reserva.belongsTo(Horario, { foreignKey: "horarioId" });
 
 /*
-Descomente a linha abaixo para sincronizar os modelos com o banco de dados!
-Criará as tabelas se não existirem e atualizará as existentes.
-
 sequelize
   .sync({ force: true })
   .then(() => {
