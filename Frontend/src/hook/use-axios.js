@@ -1,37 +1,52 @@
-import { useCallback, useState } from "react";
+import { useState, useCallback } from 'react';
+import axios from 'axios';
 
-
-// USABILIDADE - criei um Hook para usar e não repetir o código, apenas o "useAxios()"
-const useAxios = (configReq) => {
-    const {axiosIntance, url, method } = configReq;
+const useAxios = (axiosInstance) => {
     const [response, setResponse] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [controller, setController] = useState(null);
 
-    const fetchData = useCallback(async (reqData = {}, reqConfigs = {}) => {
+    // Chamada da API
+    const fetchData = useCallback(async (method, url, reqData = {}) => {
+        setResponse(null);
+        setError('');
+        setLoading(true);
+
+        // Cria uma "ligação" de cancelamento
+        const ctrl = new AbortController();
+        setController(ctrl);
+
         try {
-            let res 
-            setLoading(true)
-            const methodName = method.toLowerCase()
+            const res = await axiosInstance({
+                method: method.toLowerCase(),
+                url: url,
+                params: method.toLowerCase() === 'get' ? reqData : undefined,
+                data: method.toLowerCase() !== 'get' ? reqData : undefined,
+                signal: ctrl.signal, // Telefone para ouvir se foi cancelada (true/false)
+            });
             
-            if(['get', 'head', 'delete'].includes(methodName)) {
-                res = await axiosIntance[methodName]( url, { 
-                params: reqData,
-                ...reqConfigs 
-                });
-            } else {
-                res = await axiosIntance[methodName](url, reqData, reqConfigs);
-            }
             setResponse(res.data);
+            return res.data
         } catch (err) {
-            setError(err);
+            if (axios.isCancel(err)) {
+                console.log('Request canceled:', err.message);
+            } else {
+                setError(err.response?.data?.message || err.message || 'Ocorreu um erro.');
+            }
         } finally {
             setLoading(false);
         }
-    }, [axiosIntance, method, url]);
+    }, [axiosInstance]); // Apenas a instancia do Axios é estável 
     
-    return { response, loading, error, fetchData } 
-}
+    // Função para se usar quando quer aborta uma chamada. Usa em um return de useEffect
+    const cancel = () => {
+        if (controller) {
+            controller.abort();
+        }  
+    };
 
+    return { response, loading, error, fetchData, cancel };
+};
 
-export default useAxios
+export default useAxios;

@@ -36,3 +36,6 @@ Certifique-se de ter o **Node.js** e o **npm** (ou yarn) instalados.
 git clone [https://github.com/seu-usuario/seu-repositorio.git](https://github.com/seu-usuario/seu-repositorio.git)
 cd seu-repositorio
 ```
+
+Deploy api: https://gerenciamento-de-salas-ehmz.onrender.com
+Deploy front: https://gerenciamento-de-salas-eta.vercel.app/

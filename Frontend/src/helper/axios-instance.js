@@ -8,7 +8,7 @@ const api = Axios.create({
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
-    if (token) {
+    if (token && !config.url.includes('auth/')) {
       config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
@@ -20,8 +20,9 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.status === 401) {
+    if (error.response?.status === 401) {
       localStorage.removeItem('token');
+      localStorage.removeItem('user');
       window.location.href = '/login'
     }
     return Promise.reject(error);
