@@ -38,11 +38,8 @@ const Login = () => {
     }
   }
 
-  const eyes = () => {
-    if(isView) {
-      return <i onClick={() => viewPassword()} className="fa-regular fa-eye-slash text-primary-light cursor-pointer"></i>
-    } 
-    return <i onClick={() => viewPassword()} className="fa-regular fa-eye text-primary-light cursor-pointer"></i>
+  const eyesIcon = () => {
+      return <i onClick={viewPassword} className={`fa-regular text-primary-light cursor-pointer ${isView ? 'fa-eye-slash' : 'fa-eye'}`}></i>
   }
 
   const viewPassword = () => {
@@ -80,20 +77,20 @@ const Login = () => {
               <label htmlFor="email" className='text-text-secundary'>Senha</label>
               <div className='flex items-center gap-3 py-1 px-4 group border-[1.5px] rounded border-black focus-within:border-primary'>
                 <i className="fa-solid fa-lock text-primary-light"></i>
-                <input className='outline-none p-2 flex-1' type={isView ? 'text' : 'password'} required placeholder='Seu senha' onChange={(e) => setCredenciais({...credenciais, senha: e.target.value})}/>
-                {eyes()}
+                <input className='outline-none p-2 flex-1' type={isView ? 'text' : 'password'}  required placeholder='Seu senha' onChange={(e) => setCredenciais({...credenciais, senha: e.target.value})}/>
+                {eyesIcon()}
               </div>
             </div>
             <button disabled={loading} className='bg-primary font-bold transition-all duration-150 text-white rounded hover:bg-primary-dark py-3 text-center w-full cursor-pointer mt-3 hover:-translate-y-1'>
               {!loading ? 'Entrar' : 'Entrando...'}
             </button>
           </form>
-          <span className='cursor-pointer text-primary hover:underline text-[0.9rem]'>Esqueceu sua senha?</span>
+          <span onClick={() => alert('Funcionalidade disponível apenas mais tarde!')} className='cursor-pointer text-primary hover:underline text-[0.9rem]'>Esqueceu sua senha?</span>
           {renderErro()}
           <div className='border-t-[1.5px] border-gray-300 w-[85%] text-center'>
             <h3 className='my-3 '>
               Não tem uma conta?
-              <span className='ml-2 hover:underline cursor-pointer font-semibold text-primary'>Cadastre-se</span>
+              <span onClick={() => navigate('/register')} className='ml-2 hover:underline cursor-pointer font-semibold text-primary'>Cadastre-se</span>
             </h3>
           </div>
         </div>
