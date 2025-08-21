@@ -20,7 +20,7 @@ const Login = () => {
   }
     return () => cancel()
 
-  }, [response, navigate])
+  }, [response, navigate, cancel])
 
   const authLogin = async (e) => {
     e.preventDefault()

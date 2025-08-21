@@ -23,7 +23,7 @@ const Register = () => {
         navigate('/home', {replace: true} )
       }
     return () => cancel()
-  }, [response, navigate])
+  }, [response, navigate, cancel])
 
   useEffect(() => {
     if (confirmPassword) {
