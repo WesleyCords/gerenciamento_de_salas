@@ -22,7 +22,7 @@ const Register = () => {
         localStorage.setItem('user', JSON.stringify(data.newUser))
         navigate('/home', {replace: true} )
       }
-    return () => cancel()
+    return () => cancel() 
   }, [response, navigate, cancel])
 
   useEffect(() => {

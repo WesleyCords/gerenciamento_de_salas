@@ -1,16 +1,19 @@
+import CloseReservations from "../CloseReservations"
+import Statistics from "../Statistics"
+
 const Wellcome = ({user}) => {
 
   const primaryName = user.nome.split(' ')[0]
 
   return (
-    <div className="flex h-[100%] flex-col items-center justify-center rounded-2xl bg-primary text-color-text">
-      <h1 className="text-[3rem] font-bold">
-        Seja bem-vindo{' '}
-        <span className="font-normal text-secundary">{primaryName.toUpperCase()}</span>
-      </h1>
-      <p className="font-300 text-[1.5rem]">
-        Encontre e reserve salas de reunião ou estudos de forma rápida e fácil.
-      </p>
+    <div>
+      <div className="block py-2 border-l-[6px] bg-[rgba(0,200,0,0.1)] border-primary rounded-[6px] px-6">
+        <h1 className="font-extrabold text-text text-[2rem] tracking-wider">Olá, {primaryName}!</h1>
+        <p className="text-text-secundary hidden sm:block">Bem-vindo ao sistema de reservas. Aqui está o resumo das suas atividades.</p>
+        <p className="text-text-secundary block sm:hidden">Bem-vindo ao sistema de reservas.</p>
+      </div>
+      <Statistics />
+      <CloseReservations />
     </div>
   )
 }

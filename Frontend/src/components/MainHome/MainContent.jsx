@@ -5,7 +5,7 @@ import Wellcome from './MainWellcome'
 const MainContent = ({ screen, user }) => {
   const renderScreen = () => {
     switch (screen) {
-      case 'inicial':
+      case 'dashboard':
         return <Wellcome user={user} />
       case 'disponiveis':
         return <AvailRoom user={user}/>
@@ -13,7 +13,7 @@ const MainContent = ({ screen, user }) => {
         return <Reservation />
     }
   }
-  return <div className="flex-1 overflow-y-auto p-8">{renderScreen()}</div>
+  return <div className="overflow-y-auto max-h-screen flex-1 sm:p-8 p-3">{renderScreen()}</div>
 }
 
 export default MainContent
