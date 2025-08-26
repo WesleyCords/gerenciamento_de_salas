@@ -1,77 +1,58 @@
 import { IMaskInput } from 'react-imask'
-import CardsRomm from '../Cards/CardsRoom'
+import { Calendar, User } from 'lucide-react'
 import { useState } from 'react'
-import useAxios from "../../hook/use-axios"
-import api from "../../helper/axios-instance"
+import ConfirmReservationModal from '../Modals/ConfirmReserModal'
 
 const AvailRoom = () => {
-  const [data, setData] = useState('');
-  const [capacidade, setCapacidade] = useState('')
-
-  const {response, fetchData, error, loading } = useAxios({
-    axiosIntance: api,
-    url: "salas",
-    method: "GET"
-  })
-
-  const handleRooms = () => {
-    try {
-      if(!data || !capacidade) {
-        return alert("Insira dados para pesquisa.")
-      }
-      const params = {
-        data,
-        capacidade
-      }
-      fetchData(params)
-
-    } catch(err) { console.log("erro aqui", err)}
-  }
-
-  console.log(error)
-
-  const renderContent = () => {
-    if (loading) {
-      return <p>Carregando salas disponíveis...</p>
-    }
-    if (error) {
-      return <div className="text-[2rem] text-red-600">{error.response?.data?.message || 'Ocorreu um erro ao buscar as salas.'}</div>
-    }
-    return <CardsRomm dados={response?.data?.salasEspecifica} data={data}/>
-  }
+  const [isOpenModalReserva, setIsOpenModalReserva] = useState(false)
 
   return (
-    <main className='flex-1 overflow-y-auto'>
-      <header className="justify-center bg-white py-5 rounded-md shadow mb-8 flex gap-16 items-center">
-        <div>
-          <label htmlFor='data'>Data</label>
-          <div className="flex items-center rounded-md border-2 border-gray-300 text-gray-700 gap-2 px-1 group focus-within:border-primary">
-            <i class="fa-regular fa-calendar text-[1rem]"></i>
-            <IMaskInput
-              className="p-1.5 outline-0"
-              mask="0000-00-00"
-              type="text"
-              id='data'
-              placeholder="2025-08-09"
-              value={data}
-              onChange={(e) => setData(e.target.value)}
-            />
+    <div className='space-y-6'>
+      <h1 className='font-bold text-2xl text-text'>Salas Disponíveis</h1>
+      <div className='text-text-secundary flex-col lg:flex-row flex gap-3 lg:pr-12 p-4 rounded shadow-[0_0_5px_4px_rgba(0,0,0,0.1)]'> 
+        <div className='bg-gray-100 flex-1 flex items-center p-3 gap-3 rounded'>
+          <Calendar />
+          <IMaskInput 
+          mask='2025/08/25'
+          placeholder='Selecione uma data'
+          className='outline-0 text-text'
+          /> 
+        </div>
+        <div className='bg-gray-100 flex-1 flex items-center p-3 gap-3 rounded'>
+          <User />
+          <input className='no-spinners outline-0 text-text' type="number" placeholder='Numero de pessoas'/>
+        </div>
+        <button className='bg-primary font-semibold py-2 px-5 rounded text-white cursor-pointer hover:bg-primary-dark'>Buscar</button>
+      </div>
+      <div className='block space-y-3 sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-3'>
+        <div className='bg-gray-100 p-4'>
+          <h2 className='font-semibold text-text text-[1rem]'>Sala de Reunião 101</h2>
+          <div className='text-text-secundary flex items-center gap-3'>
+            <User size={20} />
+            <span>8 pessoas</span>
+          </div>
+          <div className='border-t-[1px] pt-4 space-y-3 mt-5'>
+            <div className='bg-gray-200 p-2 flex items-center gap-3'>
+              <h4 className='flex-1'>
+                <span>11:00 AM </span>
+                - 
+                <span> 12:00 AM</span>
+              </h4>
+              <button onClick={() => setIsOpenModalReserva(true)} className='bg-primary py-2 px-4 text-white hover:bg-primary-dark rounded cursor-pointer'>Reservar</button>
+            </div>
+            <div className='bg-gray-200 p-2 flex items-center gap-3'>
+              <h4 className='flex-1'>
+                <span>11:00 AM </span>
+                - 
+                <span> 12:00 AM</span>
+              </h4>
+              <button className='bg-primary py-2 px-4 text-white hover:bg-primary-dark rounded cursor-pointer'>Reservar</button>
+            </div>
           </div>
         </div>
-        <div>
-          <label htmlFor='capacidade'>Números de Pessoas</label>
-          <div className="flex items-center rounded-md border-2 border-gray-300 text-gray-700 gap-2 px-1 group focus-within:border-primary">
-            <i class="fa-solid fa-users text-[1rem] "></i>
-            <input id='capacidade' type="number" className="outline-0 no-spinners p-1.5" placeholder='e.g., 10' onChange={(e) => setCapacidade(e.target.value)} value={capacidade}/>
-          </div>
-        </div>
-        <button className='h-[80%] bg-primary text-white py-2 px-5 rounded cursor-pointer hover:bg-primary-light' onClick={handleRooms}>Encontrar Salas</button>
-      </header>
-      <section >
-        <h2 className='font-bold text-2xl mb-5'>Salas Disponíveis</h2>
-        {renderContent()}
-      </section>
-    </main>
+      </div>
+      {isOpenModalReserva && <ConfirmReservationModal close={setIsOpenModalReserva} />}
+    </div>
   )
 }
 

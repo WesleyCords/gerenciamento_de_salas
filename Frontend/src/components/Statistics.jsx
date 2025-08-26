@@ -1,4 +1,4 @@
-import {DoorOpen,Search,CalendarCheck, Plus} from 'lucide-react'
+import {DoorOpen,Search,CalendarCheck, Plus,ChartColumnStacked} from 'lucide-react'
 
 const Statistics = () => {
     return (
@@ -40,7 +40,7 @@ const Statistics = () => {
           <p className='text-text-secundary'>Total de horas reservadas este mês</p>
           <footer>
             <button className='cursor-pointer hover:bg-primary-dark flex gap-2 items-center py-2 px-4 text-white bg-primary rounded'>
-              <Plus size={15}/>
+              <ChartColumnStacked size={15}/>
               Ver relatório
             </button>
           </footer>

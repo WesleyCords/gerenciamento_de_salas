@@ -1,37 +1,47 @@
-import CardsReser from "../Cards/CardsReser"
-import api from "../../helper/axios-instance"
-import useAxios from "../../hook/use-axios"
+import { Clock, House, User, PencilLine, X } from 'lucide-react'
+import { useState } from 'react'
+import EditModal from '../Modals/EditModal'
+import ConfirmDeleteModal from '../Modals/ConfirmDeleteModal'
 
 const Reservations = () => {
+  const [isOpenModalEdit, setIsOpenModalEdit] = useState(false)
+  const [isOpenModalDelete, setIsOpenModalDelete] = useState(false)
 
-    const {id} = JSON.parse(localStorage.getItem('user'))
-
-    const {fetchData, error, response, loading} = useAxios({
-        url: `usuarios/${id}/reservas`,
-        method: "GET",
-        axiosIntance: api
-    })
-
-    const renderContent = () => {
-        if (loading) {
-          return <p>Carregando suas reservas...</p>
-        }
-        if (error) {
-          return <div className="text-[2rem] text-red-600">{error.response?.data?.message || 'Ocorreu um erro ao buscar suas reservas'}</div>
-        }
-        return <CardsReser dados={response?.data?.reservations} userID={id}/>
-      }
-
-    return (
-        <div className="space-y-3">
-            <div>
-                <button className="p-3 bg-primary hover:bg-primary-light rounded" onClick={() => fetchData()}>
-                    Ver reservas
-                </button>
+  return (
+    <div className='space-y-7'>
+      <h1 className="font-bold text-text text-2xl">Minhas Reservas</h1>
+      <div className='space-y-3'>
+        <div className='bg-gray-100 flex flex-col lg:flex-row items-start lg:items-center p-5 gap-3 rounded-[6px]'>
+          <span className='p-3 bg-gray-200 text-primary rounded-[8px]'><House/></span>
+          <div className='flex-1'>
+            <h3 className='text-text font-semibold '>Sala de Reunião 101</h3>
+            <div className='flex items-center gap-4 text-[0.9rem]'>
+              <span className='text-text-secundary flex items-center gap-1'>
+                <Clock size={16}/>
+                <span>11:00 AM - 12:00 PM</span>
+              </span>
+              <span className='text-text-secundary flex items-center gap-1'>
+                <User size={16}/>
+                <span>8 pessoas</span>
+              </span>
             </div>
-            {renderContent()}
+          </div>
+          <div className='flex gap-3 items-center'>
+            <button onClick={() => setIsOpenModalEdit(true)} className='text-primary py-2 px-3 bg-green-100 hover:bg-green-200 flex items-center gap-1 rounded cursor-pointer'>
+              <PencilLine size={15} />
+              <span>Editar</span>
+            </button>
+            <button onClick={() => setIsOpenModalDelete(true)} className='text-red-500 py-2 px-3 bg-red-100 hover:bg-red-200 flex items-center gap-1 rounded cursor-pointer'>
+              <X size={15} />
+              <span>Cancelar</span>
+            </button>
+          </div>
         </div>
-    )
+      </div>
+      {isOpenModalEdit && <EditModal close={setIsOpenModalEdit}/>}
+      {isOpenModalDelete && <ConfirmDeleteModal close={setIsOpenModalDelete} />}
+    </div>
+  )
 }
 
 export default Reservations

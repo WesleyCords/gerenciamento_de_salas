@@ -1,37 +1,46 @@
-import api from "../../helper/axios-instance"
-import useAxios from "../../hook/use-axios"
+import { Trash, ChevronLeft } from 'lucide-react'
 
-const ConfirmDeleteModal = ({close, userId, reservaId }) => {
+const ConfirmeDeleteModal = ({close}) => {
 
-    const {fetchData, loading} = useAxios({
-        url: `usuarios/${userId}/reservas/${reservaId}`,
-        method: "DELETE",
-        axiosIntance: api
-    })
+  const handlerEdit = () => {
+    alert('Opaa')
+    close(false) 
+  }
 
-    const handleDelete = () => {
-        fetchData()
-        alert("Reserva deletada com sucesso!")
-        close(false)
-    }
-
-    return (
-        <div className="fixed inset-0 bg-gray-400 overflow-y-auto h-full w-full flex items-center justify-center">
-            <div className="relative p-5 w-96 shadow-lg rounded-md bg-white text-center space-y-2.5 ">
-                <i class="fa-regular fa-trash-can bg-red-500 rounded-full p-3 text-[2rem] text-white"></i>
-                <h2 className="font-bold text-2xl">Confirme Delete</h2>
-                <p className="text-[0.8rem]">Tem certeza de que deseja excluir esta reserva? Esta ação é permanente e não pode ser desfeita.</p>
-                <div className="flex flex-col gap-3">
-                    <button className="bg-red-600 p-3 rounded text-white cursor-pointer hover:bg-red-800" onClick={() => handleDelete()}>
-                        {loading ? "Deletando..." : "Confirme Delete"}
-                    </button>
-                    <button className="p-3 rounded cursor-pointer hover:bg-gray-400" onClick={() => close(false)}>
-                        Cancelar
-                    </button>
-                </div>
+  return (
+    <div className="fixed inset-0 bg-[rgba(0,0,0,0.4)] h-full w-full flex items-center justify-center">
+      <div className="max-w-[95%] shadow-lg bg-white space-y-2.5 ">
+        <h2 className="p-5 font-bold text-white text-2xl bg-red-500">Confimar Cancelamento</h2>
+        <div className="p-4 pt-0 space-y-3">
+          <h3 className="font-semibold">Tem certeza que deseja cancelar esta reserva?</h3>
+          <div className="bg-gray-300 p-3 rounded space-y-2">
+            <div className='flex items-center justify-between'>
+              <span>Data:</span>
+              <span className='font-semibold'>2025/08/25</span>
             </div>
+            <div className='flex items-center justify-between'>
+              <span>Horário:</span>
+              <span className='font-semibold'>11:00 AM - 12:00 AM</span>
+            </div>
+            <div className='flex items-center justify-between'>
+              <span>Sala:</span>
+              <span className='font-semibold'>Sala de Reunião 101</span>
+            </div>
+          </div>
+          <div className="mt-4 flex items-center justify-end gap-3 font-[500]">
+            <button onClick={() => close(false)} className="hover:bg-gray-300 flex items-center gap-1 p-3 rounded cursor-pointer">
+              <ChevronLeft size={18} />
+                Cancelar
+            </button>
+            <button onClick={() => handlerEdit()} className="p-3 flex text-white items-center gap-1 rounded cursor-pointer bg-red-500 hover:bg-red-600">
+              <Trash size={18}/>
+              Confirmar cancelamento
+            </button>
+          </div>
         </div>
-    )
+      </div>
+    </div>
+  )
 }
 
-export default ConfirmDeleteModal
+export default ConfirmeDeleteModal
