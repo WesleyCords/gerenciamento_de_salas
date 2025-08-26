@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom"
+import { Github, CodeXml } from 'lucide-react'
 
 const LandingPage = () => {
     const navigate = useNavigate()
@@ -8,7 +9,10 @@ const LandingPage = () => {
             <span className="lg:block hidden h-[20%] w-[10%] rounded-full bg-primary absolute opacity-30 top-10 left-[60%]"></span>
             <span className="lg:block hidden h-[30%] w-[15%] rounded-full bg-primary absolute opacity-25 bottom-10 left-[70%]"></span>
             <div className="flex flex-col space-y-1 items-center text-center">
-                <i className="fa-brands fa-github text-[4rem] mb-6 text-primary"></i>
+                <div className="flex gap-10 items-center">
+                    <Github size={60} className="text-primary"/>
+                    <CodeXml size={60} className="text-primary"/>
+                </div>
                 <h1 className="font-bold text-[3.5rem] text-gray-800">Projeto Bootcamp</h1>
                 <div className="w-[15%] bg-primary h-1 rounded">
                 </div>
