@@ -12,9 +12,6 @@ const Register = () => {
 
   const {error, fetchData, response, cancel, loading } = useAxios(api)
 
-  console.log(response)
-  console.log(error)
-
   useEffect(() => {
       if(response) {
         const { token, data } = response

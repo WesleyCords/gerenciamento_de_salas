@@ -1,4 +1,5 @@
 import {Calendar1} from 'lucide-react'
+import NextReservaCard from './Cards/NextReservaCard'
 
 const CloseReservations = () => {
     return (
@@ -8,27 +9,9 @@ const CloseReservations = () => {
           <h2 className="font-medium text-text text-[1.2rem]">Próximas Reservas</h2>
         </header>
         <main className="mt-6 flex flex-col gap-6">
-          <div className="space-y-1">
-            <h3 className="text-text font-semibold text-[1rem]">Sala de Reuniões 01</h3>
-            <div className="text-text-secundary text-[0.9rem]">
-              <span>Hoje, </span>
-              <span>14:00 - 15:30</span>
-            </div>
-          </div>
-          <div className="space-y-1">
-            <h3 className="text-text font-semibold text-[1rem]">Sala de Reuniões 01</h3>
-            <div className="text-text-secundary text-[0.9rem]">
-              <span>Hoje, </span>
-              <span>14:00 - 15:30</span>
-            </div>
-          </div>
-          <div className="space-y-1">
-            <h3 className="text-text font-semibold text-[1rem]">Sala de Reuniões 01</h3>
-            <div className="text-text-secundary text-[0.9rem]">
-              <span>Hoje, </span>
-              <span>14:00 - 15:30</span>
-            </div>
-          </div>
+          <NextReservaCard />
+          <NextReservaCard />
+          <NextReservaCard />
         </main>
       </div>
     )

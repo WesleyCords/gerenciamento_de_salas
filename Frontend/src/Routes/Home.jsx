@@ -13,7 +13,7 @@ const Home = () => {
     <div className="block sm:flex min-h-screen bg-white">
       <Sidebar onSelectScreen={setScreenActual} screenSelect={screenActual} />
       <MenuRespo onSelectScreen={setScreenActual} screenSelect={screenActual}/>
-      <MainContent screen={screenActual} user={userDate}/>
+      <MainContent screen={screenActual} onSelectScreen={setScreenActual} user={userDate}/>
     </div>
   )
 }

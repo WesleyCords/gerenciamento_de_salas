@@ -10,7 +10,7 @@ const LandingPage = () => {
             <span className="lg:block hidden h-[30%] w-[15%] rounded-full bg-primary absolute opacity-25 bottom-10 left-[70%]"></span>
             <div className="flex flex-col space-y-1 items-center text-center">
                 <div className="flex gap-10 items-center">
-                    <Github size={60} className="text-primary"/>
+                    <Github size={60} className="text-primary"/> 
                     <CodeXml size={60} className="text-primary"/>
                 </div>
                 <h1 className="font-bold text-[3.5rem] text-gray-800">Projeto Bootcamp</h1>
