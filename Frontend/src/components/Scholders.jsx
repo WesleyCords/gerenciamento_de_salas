@@ -1,5 +1,5 @@
 import { useState } from "react"
-import ConfirmReservationModal from "./Modals/ReservaModal"
+import ConfirmReservationModal from "./Modals/ConfirmeModal"
 
 const Scholders = () => {
     const [isOpenModalReserva, setIsOpenModalReserva] = useState(false)
