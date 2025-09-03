@@ -1,9 +1,26 @@
 import { Trash, ChevronLeft } from "lucide-react";
+import useAxios from "../../hook/use-axios";
+import api from "../../helper/axios-instance";
 
-const ConfirmeDeleteModal = ({ close }) => {
+const ConfirmeDeleteModal = ({ close, reservation }) => {
+  const { fetchData } = useAxios(api);
+  console.log(reservation);
+
   const handlerEdit = () => {
-    alert("Opaa");
-    close(false);
+    fetchData(
+      "DELETE",
+      `usuarios/${reservation.usuarioId}/reservas/${reservation.id}`,
+    );
+    alert("Reserva cancelada com sucesso!");
+    close();
+  };
+
+  const formatTime = (timeString) => {
+    const [hour, minute] = timeString.split(":");
+    let h = parseInt(hour, 10);
+    const ampm = h >= 12 ? "PM" : "AM";
+    const formattedHour = h.toString().padStart(2, "0");
+    return `${formattedHour}:${minute} ${ampm}`;
   };
 
   return (
@@ -19,27 +36,30 @@ const ConfirmeDeleteModal = ({ close }) => {
           <div className="bg-gray-300 p-3 rounded space-y-2">
             <div className="flex items-center justify-between">
               <span>Data:</span>
-              <span className="font-semibold">2025/08/25</span>
+              <span className="font-semibold">{reservation.data}</span>
             </div>
             <div className="flex items-center justify-between">
               <span>Horário:</span>
-              <span className="font-semibold">11:00 AM - 12:00 AM</span>
+              <span className="font-semibold">
+                {formatTime(reservation.horario.inicio)} -{" "}
+                {formatTime(reservation.horario.fim)}
+              </span>
             </div>
             <div className="flex items-center justify-between">
               <span>Sala:</span>
-              <span className="font-semibold">Sala de Reunião 101</span>
+              <span className="font-semibold">{reservation.sala.nome}</span>
             </div>
           </div>
           <div className="mt-4 flex items-center justify-end gap-3 font-[500]">
             <button
-              onClick={() => close(false)}
+              onClick={close}
               className="hover:bg-gray-300 flex items-center gap-1 p-3 rounded cursor-pointer"
             >
               <ChevronLeft size={18} />
               Cancelar
             </button>
             <button
-              onClick={() => handlerEdit()}
+              onClick={handlerEdit}
               className="p-3 flex text-white items-center gap-1 rounded cursor-pointer bg-red-500 hover:bg-red-600"
             >
               <Trash size={18} />
