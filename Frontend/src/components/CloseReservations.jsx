@@ -14,8 +14,6 @@ const CloseReservations = () => {
       </header>
       <main className="mt-6 flex flex-col gap-6">
         <NextReservaCard />
-        <NextReservaCard />
-        <NextReservaCard />
       </main>
     </div>
   );
