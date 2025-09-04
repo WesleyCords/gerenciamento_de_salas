@@ -38,7 +38,10 @@ const AvailRoom = () => {
           <p className=" text-lg font-semibold text-text">
             Nenhuma sala disponível para os critérios selecionados.
           </p>
-          <button className="py-2 px-5 bg-primary cursor-pointer rounded-md text-lg font-semibold hover:bg-primary-dark text-principal">
+          <button
+            onClick={() => alert("Só inserir dados jovem! S2")}
+            className="py-2 px-5 bg-primary cursor-pointer rounded-md text-lg font-semibold hover:bg-primary-dark text-principal"
+          >
             Nova Reserva
           </button>
         </div>

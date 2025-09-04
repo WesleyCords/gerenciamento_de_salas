@@ -31,6 +31,13 @@ const ReservationsCard = () => {
   if (loading) {
     return <p>Carregando...</p>;
   }
+  if (!response || reservations.length === 0) {
+    return (
+      <p className="text-text text-xl font-bold text-center">
+        Nenhuma reserva encontrada.
+      </p>
+    );
+  }
   return (
     <>
       {reservations.map((res) => (
