@@ -30,7 +30,7 @@ const getRoomByCapacity = async (capacidade, data) => {
   });
   if (salas.length === 0) {
     const error = new Error(
-      "Não existe salas no momento para esses requisitos."
+      "Não existe salas no momento para esses requisitos.",
     );
     error.statusCode = 404;
     error.status = "falha";
@@ -128,7 +128,7 @@ const getRoomAvailable = async (salaID, data) => {
         salaIdParam: salaID,
       },
       type: sequelize.QueryTypes.SELECT,
-    }
+    },
   );
   return horariosSala;
 };

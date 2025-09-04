@@ -82,7 +82,7 @@ const createReservation = async (userID, salaID, horarioID, data) => {
 
   if (existReserva) {
     const error = new Error(
-      "Já existe reserva para essa data, horário e sala."
+      "Já existe reserva para essa data, horário e sala.",
     );
     error.statusCode = 409;
     error.status = "falha";
@@ -133,7 +133,7 @@ const attReserva = async (userID, reservaID, horario_id) => {
   }
   const reservaAtualizada = Reserva.update(
     { horarioId: horario_id },
-    { where: { id: reservaID, usuario_id: userID } }
+    { where: { id: reservaID, usuario_id: userID } },
   );
   return reservaAtualizada;
 };

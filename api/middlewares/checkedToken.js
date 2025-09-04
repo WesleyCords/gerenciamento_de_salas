@@ -10,7 +10,7 @@ const checkedToken = (req, res, next) => {
 
   if (!token) {
     const error = new Error(
-      "Você não está logado! Por favor, faça o login para ter acesso."
+      "Você não está logado! Por favor, faça o login para ter acesso.",
     );
     error.statusCode = 401;
     error.status = "fail";
@@ -24,7 +24,7 @@ const checkedToken = (req, res, next) => {
   } catch (err) {
     if (err.name === "JsonWebTokenError") {
       const error = new Error(
-        "Token inválido. Por favor, faça login novamente!"
+        "Token inválido. Por favor, faça login novamente!",
       );
       error.statusCode = 401;
       error.status = "fail";
@@ -32,7 +32,7 @@ const checkedToken = (req, res, next) => {
     }
     if (err.name === "TokenExpiredError") {
       const error = new Error(
-        "Seu token expirou! Por favor, faça login novamente."
+        "Seu token expirou! Por favor, faça login novamente.",
       );
       error.statusCode = 401;
       error.status = "fail";

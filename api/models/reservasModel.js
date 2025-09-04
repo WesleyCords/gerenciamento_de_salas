@@ -1,5 +1,5 @@
 import { DataTypes, Model } from "sequelize";
-import { sequelize } from "../config/databases.js";  
+import { sequelize } from "../config/databases.js";
 
 class Reserva extends Model {}
 
@@ -35,7 +35,7 @@ Reserva.init(
       },
     },
     data: {
-      type: DataTypes.DATEONLY, 
+      type: DataTypes.DATEONLY,
       allowNull: false,
     },
     createdAt: {
@@ -43,7 +43,7 @@ Reserva.init(
       allowNull: false,
       field: "created_at",
     },
-    updatedAt: { 
+    updatedAt: {
       type: DataTypes.DATE,
       allowNull: false,
       field: "updated_at",
@@ -59,7 +59,7 @@ Reserva.init(
         fields: ["sala_id", "horario_id", "data"],
       },
     ],
-  }
-);  
+  },
+);
 
 export default Reserva;

@@ -12,7 +12,10 @@ router.use(checkedToken);
 router.get("/:id", usersController.getUserByID);
 router.get("/:id/reservas", usersController.getReservations);
 router.post("/:id/reservas", usersController.createReservation);
-router.delete("/:userID/reservas/:reservaID", usersController.deleteReservation);
+router.delete(
+  "/:userID/reservas/:reservaID",
+  usersController.deleteReservation,
+);
 router.put("/:userID/reservas/:reservaID", usersController.attReserva);
 
 export default router;
@@ -123,7 +126,6 @@ export default router;
  *       401:
  *         description: Não autorizado
  */
-
 
 /**
  * @swagger

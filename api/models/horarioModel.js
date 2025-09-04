@@ -31,7 +31,7 @@ Horario.init(
       allowNull: false,
       field: "created_at",
     },
-    updatedAt: {  
+    updatedAt: {
       type: DataTypes.DATE,
       allowNull: false,
       field: "updated_at",
@@ -45,12 +45,12 @@ Horario.init(
       inicioAntesDoFim() {
         if (this.inicio >= this.fim) {
           throw new Error(
-            "O horário de início deve ser anterior ao horário de fim."
+            "O horário de início deve ser anterior ao horário de fim.",
           );
         }
       },
     },
-  }
+  },
 );
 
 export default Horario;

@@ -39,7 +39,7 @@ const createReservation = async (req, res, next) => {
       userID,
       sala_id,
       horario_id,
-      data
+      data,
     );
     res.status(201).json({
       status: "sucesso",
@@ -74,7 +74,7 @@ const attReserva = async (req, res, next) => {
     const reservaAtualizada = await userService.attReserva(
       userID,
       reservaID,
-      horario_id
+      horario_id,
     );
     res.status(200).json({
       status: "sucesso",

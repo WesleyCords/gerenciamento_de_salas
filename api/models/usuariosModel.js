@@ -27,14 +27,14 @@ Usuario.init(
     createdAt: {
       type: DataTypes.DATE,
       allowNull: false,
-      fileds: "created_at"
-    }
+      fileds: "created_at",
+    },
   },
   {
     sequelize,
     modelName: "usuarios",
-    timestamps: true
-  }
+    timestamps: true,
+  },
 );
 
 export default Usuario;

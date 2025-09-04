@@ -29,7 +29,7 @@ const connectDB = async () => {
   } catch (error) {
     console.error(
       "Não foi possível conectar ou sincronizar com o banco de dados:",
-      error
+      error,
     );
   }
 };

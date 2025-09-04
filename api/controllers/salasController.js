@@ -16,7 +16,7 @@ const getRoomByCapacity = async (req, res, next) => {
 
     const salasEspecifica = await roomService.getRoomByCapacity(
       capacidade,
-      data
+      data,
     );
     res.status(200).json({
       status: "sucesso",
@@ -72,7 +72,7 @@ const getRoomAvailable = async (req, res, next) => {
     const salaID = req.params.id;
     const salasDisponivel = await roomService.getRoomAvailable(
       salaID,
-      dataInformada
+      dataInformada,
     );
     res.status(200).json({
       status: "sucesso",

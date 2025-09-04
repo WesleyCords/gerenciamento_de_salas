@@ -41,7 +41,7 @@ const ConfirmeDeleteModal = ({ close, reservation }) => {
             <div className="flex items-center justify-between">
               <span>Horário:</span>
               <span className="font-semibold">
-                {formatTime(reservation.horario.inicio)} -{" "}
+                {formatTime(reservation.horario.inicio)} {"-"}
                 {formatTime(reservation.horario.fim)}
               </span>
             </div>
